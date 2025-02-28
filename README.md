@@ -6,7 +6,7 @@ This repository contains the implementation of the FFCL-SAM model proposed in ou
 
 We propose a pretraining strategy, namely Forward-Forward Contrastive Learning (FFCL) with both local and global-level contrastive learning, enabling high-accuracy patch-level classification of radiograph regions into positive and negative margins. The classification outputs were used to generate rough segmentation masks, which were subsequently refined by the Segment Anything Model 2 (SAM 2) using prompt-based segmentation techniques.
 
-# Model
+## Model
 ![Figure](https://github.com/tbwa233/FFCL-SAM/blob/main/images/ffcl.png?raw=true)
 
 FFCL training involves multiple stages: first, a backbone architecture is selected as the target model. FFCL then trains the target model with local contrastive learning at each layer (Forward-Forward part) followed by global contrastive learning at the whole network (regular contrastive learning). Finally, the pre-trained model is used to perform the downstream classification task (positive/negative margins) using backpropagation.
@@ -14,3 +14,6 @@ FFCL training involves multiple stages: first, a backbone architecture is select
 ![Figure](https://github.com/tbwa233/FFCL-SAM/blob/main/images/ffcl-sam.png?raw=true)
 
 Patient radiographs is annotated with pixel-level positive and negative tumors. Patches extracted from the segmented regions, are used to train the FFCL-pretrained model to detect positive margins. A rough binary mask is then reconstructed leveraging the class label predictions. Two prompts, p1, which is a bounding box encompassing the coarse mask data, and p2, which is the coarse mask itself, are generated from the coarse mask and used as input to the SAM 2 model. p1 is used to produce the first mask prediction, m1, and p2 is used to refine the mask into the final segmentation mask, m2.
+
+## Code
+The code has been written in Python using the Pytorch framework. Training requries a GPU. We provide a Jupyter Notebook, which can be run in Google Colab, containing the algorithm in a usable version.
